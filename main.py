@@ -16,12 +16,32 @@ def count_characters(text):
             freq[ch] = 1
     return freq
 
+def sort_on(dict):
+    return dict["count"]
+
+def freq_to_list(freq):
+    freq_list = []
+    for char, count in freq.items():
+        freq_list.append({"char": char, "count": count})
+    return freq_list
+
+def generate_report(text):
+    words = count_words(text)
+    freq = count_characters(text)
+    characters = freq_to_list(freq)
+    characters.sort(key=sort_on, reverse=True)
+
+    print("--- Begin report of books/frankenstein.txt ---")
+    print(f"{words} words found in the document")
+    print()
+    for item in characters:
+        print(f"The character \'{item['char']}\' was found {item['count']} times.")
+    print("--- End of report ---")
+
 def main():
     with open('books/frankenstein.txt') as file:
         text = file.read()
-    print(text)
-    print(f'Number of words: {count_words(text)}')
-    print(f'Frequency of characters: {count_characters(text)}')
+    generate_report(text)
 
 
 if __name__ == '__main__':
